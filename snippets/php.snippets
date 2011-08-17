@@ -2,23 +2,21 @@ snippet php
 	<?php
 	${1}
 	?>
-snippet phpil
-	<?php ${1} ?>
+snippet phpi
+	<?php ${1:codigo} ?>
 snippet ec
 	echo "${1:string}"${2};
 snippet inc
 	include '${1:file}';${2}
-snippet inc1
+snippet inco
 	include_once '${1:file}';${2}
 snippet req
 	require '${1:file}';${2}
-snippet req1
+snippet reqo
 	require_once '${1:file}';${2}
 # $GLOBALS['...']
 snippet globals
 	$GLOBALS['${1:variable}']${2: = }${3:something}${4:;}${5}
-snippet G
-	$GLOBALS['${1:variable}']
 snippet $_ COOKIE['...']
 	$_COOKIE['${1:variable}']${2}
 snippet $_ ENV['...']
@@ -39,7 +37,7 @@ snippet $_ SESSION['...']
 snippet /*
 	/**
 	 * ${1}
-	 */
+	 **/
 # Class - post doc
 snippet doc_cp
 	/**
@@ -47,21 +45,21 @@ snippet doc_cp
 	 *
 	 * @package ${2:default}
 	 * @author ${3:`g:snips_author`}
-	 */${4}
+	**/${4}
 # Class Variable - post doc
 snippet doc_vp
 	/**
 	 * ${1:undocumented class variable}
 	 *
 	 * @var ${2:string}
-	 */${3}
+	 **/${3}
 # Class Variable
 snippet doc_v
 	/**
 	 * ${3:undocumented class variable}
 	 *
 	 * @var ${4:string}
-	 */
+	 **/
 	${1:var} $${2};${5}
 # Class
 snippet doc_c
@@ -70,7 +68,7 @@ snippet doc_c
 	 *
 	 * @packaged ${4:default}
 	 * @author ${5:`g:snips_author`}
-	 */
+	 **/
 	${1:}class ${2:}
 	{${6}
 	} // END $1class $2
@@ -78,12 +76,12 @@ snippet doc_c
 snippet doc_dp
 	/**
 	 * ${1:undocumented constant}
-	 */${2}
+	 **/${2}
 # Constant Definition
 snippet doc_d
 	/**
 	 * ${3:undocumented constant}
-	 */
+	 **/
 	define(${1}, ${2});${4}
 # Function - post doc
 snippet doc_fp
@@ -92,7 +90,7 @@ snippet doc_fp
 	 *
 	 * @return ${2:void}
 	 * @author ${3:`g:snips_author`}
-	 */${4}
+	 **/${4}
 # Function signature
 snippet doc_s
 	/**
@@ -100,7 +98,7 @@ snippet doc_s
 	 *
 	 * @return ${5:void}
 	 * @author ${6:`g:snips_author`}
-	 */
+	 **/
 	${1}function ${2}(${3});${7}
 # Function
 snippet doc_f
@@ -109,7 +107,7 @@ snippet doc_f
 	 *
 	 * @return ${5:void}
 	 * @author ${6:`g:snips_author`}
-	 */
+	 **/
 	${1}function ${2}(${3})
 	{${7}
 	}
@@ -122,11 +120,11 @@ snippet doc_h
 	 * @version ${3:$Id$}
 	 * @copyright ${4:$2}, `strftime('%d %B, %Y')`
 	 * @package ${5:default}
-	 */
+	 **/
 	
 	/**
 	 * Define DocBlock
-	 */
+	 *//
 # Interface
 snippet doc_i
 	/**
@@ -134,21 +132,18 @@ snippet doc_i
 	 *
 	 * @package ${3:default}
 	 * @author ${4:`g:snips_author`}
-	 */
+	 **/
 	interface ${1:}
 	{${5}
 	} // END interface $1
 # class ...
 snippet class
-	/**
-	 * ${1}
-	 */
-	class ${2:ClassName}
+	class ${1:ClassName}
 	{
-		${3}
-		function ${4:__construct}(${5:argument})
+		${2}
+		function ${3:__construct}(${4:argument})
 		{
-			${6:// code...}
+			${5:// code...}
 		}
 	}
 # define(...)
@@ -158,38 +153,37 @@ snippet def
 snippet def?
 	${1}defined('${2}')${3}
 snippet wh
-	while (${1:/* condition */}) {
+	while (${1:/* condition */}):
 		${2:// code...}
-	}
+	endwhile;
 # do ... while
 snippet do
 	do {
 		${2:// code... }
 	} while (${1:/* condition */});
 snippet if
-	if (${1:/* condition */}) {
+	if (${1:/* condition */}):
 		${2:// code...}
-	}
+	endif;
 snippet ife
-	if (${1:/* condition */}) {
+	if (${1:/* condition */}):
 		${2:// code...}
-	} else {
+	else:
 		${3:// code...}
-	}
+	endif;
 	${4}
 snippet else
-	else {
+	else:
 		${1:// code...}
-	}
 snippet elseif
-	elseif (${1:/* condition */}) {
+	elseif (${1:/* condition */}):
 		${2:// code...}
-	}
+	endif;
 # Tertiary conditional
 snippet t
 	$${1:retVal} = (${2:condition}) ? ${3:a} : ${4:b};${5}
 snippet switch
-	switch ($${1:variable}) {
+	switch ($${1:variable}):
 		case '${2:value}':
 			${3:// code...}
 			break;
@@ -197,51 +191,280 @@ snippet switch
 		default:
 			${4:// code...}
 			break;
-	}
+	endswitch;
 snippet case
 	case '${1:value}':
 		${2:// code...}
 		break;${3}
 snippet for
-	for ($${2:i} = 0; $$2 < ${1:count}; $$2${3:++}) {
+	for ($${2:i} = 0; $$2 < ${1:count}; $$2${3:++}):
 		${4: // code...}
-	}
+	endfor;
 snippet foreach
-	foreach ($${1:variable} as $${2:value}) {
+	foreach ($${1:variable} as $${2:key}):
 		${3:// code...}
-	}
-snippet foreachk
-	foreach ($${1:variable} as $${2:key} => $${3:value}) {
-		${4:// code...}
-	}
+	endforeach;
 snippet fun
-	${1:public }function ${2:FunctionName}(${3})
+	${1:public} function ${2:FunctionName}(${3})
 	{
 		${4:// code...}
 	}
 # $... = array (...)
 snippet array
 	$${1:arrayName} = array('${2}' => ${3});${4}
-snippet try
-	try {
-		${2}
-	} catch (${1:Exception} $e) {
-	}
-# lambda with closure
-snippet lambda
-	${1:static }function (${2:args}) use (${3:&$x, $y /*put vars in scope (closure) */}) {
-		${4}
-	};
-# pre_dump();
-snippet pd
-	echo '<pre>'; var_dump(${1}); echo '</pre>';
-# pre_dump(); die();
-snippet pdd
-	echo '<pre>'; var_dump(${1}); echo '</pre>'; die(${2:});
-snippet vd
-	var_dump(${1});
 
-snippet http_redirect
-	header ("HTTP/1.1 301 Moved Permanently"); 
-	header ("Location: ".URL); 
-	exit();
+##### Codeigniter Snippets #####
+# Generic $this->
+snippet this
+	$this->${1:model/controler}->${2:method}(${3:array});${4}
+# Dados
+snippet data
+	$${1:data}['${2}'] = ${3};${4}
+# New Model Class
+snippet classm
+	<?php
+		/*
+		* ${1:Describe the model's purpose}
+		*/
+		class ${2:model_name} extends CI_Model
+		{
+			function __construct()
+			{
+				parent::__construct();
+			}
+
+			${3:// Code...}
+		}
+# New Controller Class
+snippet classc
+	<?php
+		/*
+		* ${1:Describe the controlle's purpose}
+		*/
+		class ${2:controller_name} extends CI_Controller
+		{
+			function __construct()
+			{
+				parent::__construct();
+			}
+
+			${3:// code...}
+		}
+# Function
+snippet func
+	function ${1:function_name}(${2:param})
+	{
+		${3://code...};
+	}
+# Form Validation Rules
+snippet formule
+	$this->form_validation->set_rules('${1:field_name}','${2:human_name}','${3:rules}');${4}
+# Data array - $data['key']
+snippet darr
+	$data['${1:arrayName}'] = array(
+		'${2}' => ${3},${4}
+	);
+# Additional array data
+snippet arrv
+	'${1}' => ${2},${3}
+# Load view template
+	$data['main_content'] = '${1:view}';
+	$this->load->view('includes/template', $data);${2}
+
+##### Common Functions #####
+# Form validation run == FALSE
+snippet funform
+	function ${1:function} ()
+	{
+		${2:rules}
+		if($this->form_validation_run() == FALSE):
+			${3:form_data_arrays}
+		else:
+			${4:succes_view}
+		endif;${5}
+	}
+# Ifrun
+snippet ifrun
+	if ($this->form_validation_run() == FALSE):
+		${1}
+	endif;${2}
+# Return If
+snippet returnif
+	if ($${1:q}->num_rows() > 0):
+		$${2:array} = $q->row_array();
+		return $${3:array};
+	else:
+		return FALSE;
+	endif;${5}
+##### Form Helper #####
+# Validation Errors
+snippet valerr
+	<?php echo validation_errors(); ?>${1}
+# Form Open
+snippet formo
+	<?php echo form_open('${1:form_controller}'); ?>${2}
+# Form Close
+snippet formc
+	<?php echo form_close(); ?>${1}
+## Form Fields ##
+# Hidden
+snippet fhidden
+	<?php echo form_hidden('${1:name}', ${2:array}); ?>${3}
+# Input
+snippet finput
+	<?php echo form_input('${1:array}', set_value('${2:name}')); ?>${3}
+# Password
+snippet fpass
+	<?php echo form_password('${1:array}', set_value('${2:name}')); ?>${3}
+# Upload
+snippet fupload
+	<?php echo form_upload('${1:array}', set_value('${2:name}')); ?>${3}
+# Text area
+snippet ftext
+	<?php echo form_textarea('${1:array}', set_value('${2:name}')); ?>${3}
+# Drop-down
+snippet fdrop
+	<?php echo form_dropdown('${1:name}',${2:array}, $this->input->post('${1}')); ?>${3}
+# Checkbox
+snippet fcheck
+	<?php echo form_checkbox($${1:array}['${2:key}'], '', set_checkbox('${1}[]', '${2}')); ?>${3}
+# Radio button
+snippet fradio
+	<?php echo form_radio($${1:array}['${2:key}'], '', set_radio('${1}[]', '${2}')); ?>${3}
+# Form submit
+snippet fsubmit
+	<?php echo form_submit('${1:name}', '${2:value}'); ?>${3}
+# Form reset
+snippet freset
+	<?php echo form_reset('${1:name}', '${2:value}'); ?>${3}
+# Fieldset open
+snippet fieldo
+	<?php form_fieldset('${1:label}', '${2:array}'); ?>${3}
+# Fieldset close
+snippet fieldc
+	<?php form_fieldset_close(); ?>${1}
+##### HTML Snippets #####
+# <br>
+snippet r
+	<br`Close()[1:]`>
+# Div with class
+snippet div
+	<div id="${1:name}" class="${2}">
+		${3}
+	</div>
+# Ordered list
+snippet ol
+	<ol id="${1}">
+		${2}
+	</ol>
+# Unordered list
+snippet ul
+	<ul id="${1}">
+		${2}
+	</ul>
+# List Item
+snippet li
+	<li>${1}</li>${2}
+##### PHP/HTML Shorthand #####
+# PHP Foreach
+snippet sforeach
+	<?php foreach ($${1:array} as $${2:key}) : ?>
+		${3:// code...}
+	<?php endforeach; ?>
+##### Database Class/Active Record #####
+# Get query
+snippet dbget
+	$${1:q} = $this->db->get('${2:table}');${3}
+# Get_where query
+snippet dbgetwhere
+	$${1:q} = $this->db->get_where('${2:table}', array('${3:field}' => $${4:input}));${5}
+# Select
+snippet dbselect
+	$this->db->select('${1:fields}');${2}
+# Where
+snippet dbwhere
+	$this->db->where('${1:field}', $${2:input});${3}
+# Insert
+snippet dbinsert
+	$this->db->insert('${1:table}', $${2:array});${3}
+# Update
+snippet dbupdate
+	$this->db->update('${1:table}', $${2:array});${3}
+# Delete
+snippet dbdelete
+	$this->db->delete('${1:table}', $${2:array});${3}
+##### URL Helper #####
+# Site URL
+snippet surl
+	<?php echo site_url("${1:segments}"); ?>${2}
+# Base URL
+snippet burl
+	<?php echo base_url(); ?>${1}
+# Current URL
+snippet curl
+	<?php echo current_url(); ?>${1}
+# Anchor
+snippet anchor
+	<?php echo anchor('${1:segments}', '${2:text}', '${3:attributes}'); ?>${4}
+# Safe Mailto
+snippet mailto
+	<?php echo safe_mailto('${1:email}', '${2:text}'); ?>${3}
+
+##### Validação de formularios #####
+# set_message
+snippet fset
+	$this->form_validation->set_message(${1:rules},'${2:mensagem}');${3}
+# set_rules
+snippet frules
+	$this->form_validation->set_rules($${1:rules});${2}
+# run
+snippet frun
+	$this->form_validation->run();
+# array rules
+snippet rules
+	$${1:rules} = array(
+		array(
+			'field' =>'${2:field_name}',
+			'label' =>'${3:label_name}',
+			'rules' =>'${4:rules}'
+		)${5}
+	);
+# arules
+snippet arules
+	array(
+		'field' =>'${1:field_name}',
+		'label' =>'${2:label_name}',
+		'rules' =>'${3:rules}'
+	)${4}
+# input post
+snippet ipost
+	$this->input->post('${1:rules}');${2}
+##### LOAD #####
+# Load view
+snippet lview
+	$this->load->view(${1:view_name},$${2:param});${3}
+# Load model
+snippet lmodel
+	$this->load->model('${1:model_name}');${2}
+# Load helper
+snippet lhelper
+	$this->load->helper('${1:helper_name}');${2}
+# Load library
+snippet lbrary
+	$this->load->library('${1:library_name}');${2}
+##### EMAIL #####
+# email from
+snippet efrom
+	$this->email->from(${1:email},${2:nome});${3}
+# email to
+snippet eto
+	$this->email->to(${1:quemrecebe@website.com.br});${2}
+# email subject
+snippet esubject
+	$this->email->subject(${1:sub-assunto});${2}
+# email message
+snippet emsg
+	$this->email->message(${1:message});${2}
+# email send
+snippet esend
+	$this->email->send();
